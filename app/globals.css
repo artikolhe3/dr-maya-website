@@ -1,26 +1,139 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary-50: #f4f6f2;
+  --color-primary-100: #e9ede5;
+  --color-primary-200: #d3dbcc;
+  --color-primary-300: #b2bfab;
+  --color-primary-400: #8da183;
+  --color-primary-500: #4a5d4e;
+  /* Olive Green */
+  --color-primary-600: #3b4b3e;
+  --color-primary-700: #303d32;
+
+  --color-secondary-50: #fdfdfc;
+  --color-secondary-100: #f9f7f2;
+  /* Pale Cream Background */
+  --color-secondary-200: #f1ede4;
+  --color-secondary-300: #e5decb;
+
+  --color-accent-500: #4a5d4e;
+  /* Same as primary for this minimalist theme */
+
+  --font-heading: var(--font-outfit), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground-rgb: 74, 93, 78;
+  --background-start-rgb: 249, 247, 242;
+  --background-end-rgb: 249, 247, 242;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: #4a5d4e;
+  background-color: #f9f7f2;
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-8 md:px-16 lg:px-24;
+  }
+
+  .section-padding {
+    @apply py-24 md:py-32 lg:py-40;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-10 py-3 border border-primary-500 text-primary-500 text-xs font-semibold uppercase tracking-[0.2em] transition-all duration-500 hover:bg-primary-500 hover:text-white cursor-pointer;
+  }
+
+  .image-arch {
+    @apply rounded-t-full;
+  }
+
+  .image-circle {
+    @apply rounded-full;
+  }
+
+  .heading-xl {
+    @apply font-heading text-4xl md:text-5xl lg:text-5xl font-medium tracking-tight;
+  }
+
+  .heading-lg {
+    @apply font-heading text-3xl md:text-4xl font-medium tracking-tight;
+  }
+
+  .text-lead {
+    @apply text-base md:text-lg text-primary-600/80 leading-relaxed font-light;
+  }
+
+  /* Reveal Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleUp {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .reveal {
+    opacity: 0;
+    animation: fadeInUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .reveal-scale {
+    opacity: 0;
+    animation: scaleUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .reveal-delay-1 {
+    animation-delay: 0.2s;
+  }
+
+  .reveal-delay-2 {
+    animation-delay: 0.4s;
+  }
+
+  .reveal-delay-3 {
+    animation-delay: 0.6s;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-500 hover:-translate-y-2;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-10 py-3 border border-primary-500 text-primary-500 text-[10px] font-bold uppercase tracking-[0.3em] transition-all duration-500 hover:bg-primary-500 hover:text-white cursor-pointer active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-10 py-3 bg-primary-500 text-white text-[10px] font-bold uppercase tracking-[0.3em] transition-all duration-500 hover:bg-primary-600 cursor-pointer active:scale-95;
+  }
+}
+
+/* Scroll reveal observers would be better, but CSS animations on load for now */
+section {
+  opacity: 0;
+  animation: fadeInUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+section:nth-child(n) {
+  animation-delay: calc(var(--index, 0) * 0.15s);
 }
